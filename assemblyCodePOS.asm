@@ -2,36 +2,48 @@
 msg_a: .asciiz "Insira o valor de A: "
 msg_b: .asciiz "Insira o valor de B: "
 msg_c: .asciiz "Insira o valor de C: "
-msg_s: .asciiz "O valor de S é: "
+msg_s: .asciiz "O valor de S e: "
 
 .text
+
 # Exibir_msg_a
-li $v0, 4
 la $a0, msg_a
-syscall
-# Ler msg_a
-li $v0, 5
-syscall
+jal ler_valor #chama funcao
 move $s0, $v0
 
 # Exibir_msg_b
-li $v0, 4
 la $a0, msg_b
-syscall
-# Ler msg_b
-li $v0, 5
-syscall
+jal ler_valor
 move $s1, $v0
 
 # Exibir_msg_c
-li $v0, 4
 la $a0, msg_c
-syscall
-# Ler msg_c
-li $v0, 5
-syscall
+jal ler_valor
 move $s2, $v0
 
+jal calcular
+move $s3, $v0
+
+la $a0, msg_s
+move $a1, $s3
+jal saida
+
+li $v0, 10
+syscall
+
+#/////////////////////////////////////////////
+
+ler_valor:
+li $v0, 4
+syscall
+	
+# Ler msg_a
+li $v0, 5
+syscall
+	
+jr $ra
+
+calcular:	
 # Negar a,b,c
 xori $s3,$s0,0000000000000001 #!a
 xori $s4,$s1,0000000000000001 #!b
@@ -54,10 +66,16 @@ and $t5, $t0, $t1
 and $t6, $t5, $t3
 and $t7, $t6, $t4
 
+move $v0, $t7
+jr $ra
+
 # Exibir saida
+saida:
 li $v0, 4
-la $a0, msg_s
 syscall
+
 li $v0, 1
-move $a0, $t7
+move $a0, $a1
 syscall
+
+jr $ra
