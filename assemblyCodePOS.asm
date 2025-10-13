@@ -72,10 +72,10 @@ jr $ra
 # Exibir saida
 saida:
 li $v0, 4
-syscall
+syscall		    # imprime mensagem									
 
 li $v0, 1
 move $a0, $a1
-syscall
+syscall             # imprime valor
 
 jr $ra
