@@ -118,7 +118,7 @@ syscall
 jr $ra # Volta para o main
 #*******************************************************
 negar:
-xori $t0, $a0, 0000000000000001 # Nega
+xori $v0, $a0, 0000000000000001 # Nega
 
 jr $ra # Volta para o main
 #********************************************************
@@ -131,3 +131,4 @@ multiplica:
 and $v0, $a0, $a1
 
 jr $ra # Volta para o main
+
